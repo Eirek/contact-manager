@@ -21,11 +21,13 @@ enum Groups
 	COLLEAGUES
 };
 
-typedef struct contact
-{
+typedef struct Person Contact;
+
+struct Person {
 char name[80];
 char phone[12];
 enum Groups group;
-}Contact;
+Contact  *next;
+};
 
 #endif

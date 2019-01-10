@@ -5,20 +5,32 @@
 #include "config.h"
 #include "contact.h"
 
+int main(){
+	int choice =0;
+	Contact myContact;
+	myContact.next = NULL;
 
-int main(int argc, char* argv[])
-{
-	int choice = -1;
-	char buf[3];
+	while (choice != 7) {
+ 		printf("Choose choicetion:\n");
+ 		printf("1 - Add contact.\n");
+ 		printf("2 - Delete contact.\n");
+ 		printf("7 - Exit.\n");
+ 		scanf("%d", &choice);
 
-	while (choice != MENU_CLOSE)
-	{
-		menu(MENU_MAIN);
+	switch(choice) {
+		case 1:
+			addContact(&myContact);
+			break;
+		case 2:
+			deleteContact(&myContact);
+			break;
+		case 7:
+			printf("Shutting down.\n\n");
+			break;
+		default:
+			printf("Invalid choicetion. Try again.\n\n");
+			break;
 
-		scanf("%d", &choice);
-
-		menu(choice);
-	}
-
-	return 0;
+		}
+ 	}
 }
