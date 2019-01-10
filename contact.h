@@ -9,5 +9,6 @@ void addContact(Contact *head);
 
 void searchContact(Contact *head);
 
+char *convertGroupIdToName(int id);
 
 #endif

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "config.h"
 #include "contact.h"
@@ -84,7 +85,7 @@ void searchContact(Contact *head){
 				if(strcmp(head->name, searchName) == 0){
 					printf("Found contact with name %s\n", searchName);
 					printf("%-20s %-12s %-10s\n", "NAME", "PHONE", "GROUP");
-					printf("%-20s %-12s %-10d\n", head->name, head->phone, head->group);
+					printf("%-20s %-12s %-10s\n", head->name, head->phone, convertGroupIdToName(head->group));
 
 				}
 				head = head->next;
@@ -99,7 +100,7 @@ void searchContact(Contact *head){
 				if(strcmp(head->phone, searchPhone) == 0){
 					printf("Found contact with phone %s\n", searchPhone);
 					printf("%-20s %-12s %-10s\n", "NAME", "PHONE", "GROUP");
-					printf("%-20s %-12s %-10d\n", head->name, head->phone, head->group);
+					printf("%-20s %-12s %-10s\n", head->name, head->phone, convertGroupIdToName(head->group));
 
 				}
 				head = head->next;
@@ -109,4 +110,18 @@ void searchContact(Contact *head){
 		}
 	}
 }
+
+char *convertGroupIdToName(int id){
+	switch(id){
+		case 1:
+			return "family";
+		case 2:
+			return "friends";
+		case 3:
+			return "colleagues";
+		default:
+			return "no group";
+	}
+}
+
 
