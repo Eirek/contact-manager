@@ -81,9 +81,25 @@ void searchContact(Contact *head){
 			scanf("%s", searchName);
 			printf("\n");
 			while(head != NULL) {
-				if(strcmp(head->name,searchName) == 0){
-					printf("Found contact with name %s", searchName);
-					printf("%s %s %d\n", head->name, head->phone, head->group);
+				if(strcmp(head->name, searchName) == 0){
+					printf("Found contact with name %s\n", searchName);
+					printf("%-20s %-12s %-10s\n", "NAME", "PHONE", "GROUP");
+					printf("%-20s %-12s %-10d\n", head->name, head->phone, head->group);
+
+				}
+				head = head->next;
+			}
+			break;
+
+			case 2:
+			printf("Enter the phone: ");
+			scanf("%s", searchPhone);
+			printf("\n");
+			while(head != NULL) {
+				if(strcmp(head->phone, searchPhone) == 0){
+					printf("Found contact with phone %s\n", searchPhone);
+					printf("%-20s %-12s %-10s\n", "NAME", "PHONE", "GROUP");
+					printf("%-20s %-12s %-10d\n", head->name, head->phone, head->group);
 
 				}
 				head = head->next;
@@ -91,6 +107,6 @@ void searchContact(Contact *head){
 			break;
 
 		}
-}
+	}
 }
 
