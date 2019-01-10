@@ -6,6 +6,7 @@
 #include "contact.h"
 
 int main(){
+
 	int choice =0;
 	Contact myContact;
 	myContact.next = NULL;
@@ -14,6 +15,7 @@ int main(){
  		printf("Choose choicetion:\n");
  		printf("1 - Add contact.\n");
  		printf("2 - Delete contact.\n");
+		printf("3 - Search Contact\n");
  		printf("7 - Exit.\n");
  		scanf("%d", &choice);
 
@@ -23,6 +25,9 @@ int main(){
 			break;
 		case 2:
 			deleteContact(&myContact);
+			break;
+		case 3:
+			searchContact(&myContact);
 			break;
 		case 7:
 			printf("Shutting down.\n\n");

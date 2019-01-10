@@ -7,5 +7,7 @@ void deleteContact(Contact *head);
 
 void addContact(Contact *head);
 
+void searchContact(Contact *head);
+
 
 #endif

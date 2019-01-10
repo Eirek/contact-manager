@@ -62,3 +62,35 @@ void deleteContact(Contact *head) {
  		printf("The contact was not found.\n");
 }
 
+void searchContact(Contact *head){
+	char searchName[80];
+	char searchPhone[12];
+	int serachGroup;
+	int searchChoice = 0;
+
+	while (searchChoice < 1 || searchChoice > 3){
+		printf("1. Name\n");
+		printf("2. Phone\n");
+		printf("3. Group\n");
+		printf("How would you like to search: ");
+		scanf("%d", &searchChoice);
+
+		switch(searchChoice){
+			case 1:
+			printf("Enter the name: ");
+			scanf("%s", searchName);
+			printf("\n");
+			while(head != NULL) {
+				if(strcmp(head->name,searchName) == 0){
+					printf("Found contact with name %s", searchName);
+					printf("%s %s %d\n", head->name, head->phone, head->group);
+
+				}
+				head = head->next;
+			}
+			break;
+
+		}
+}
+}
+
