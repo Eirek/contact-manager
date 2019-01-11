@@ -6,7 +6,7 @@
 #include "contact.h"
 
 int main(){
-
+    
 	int choice =0;
 	char filename[100];
 	Contact* myContact;

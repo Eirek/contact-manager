@@ -7,8 +7,6 @@ Contact *ScanList(Contact *head, char name[]);
 
 void deleteContact(Contact *head);
 
-//void addContact(Contact *head);
-
 Contact* addContact(Contact* head);
 
 Contact* makeNode(char *name, char *phone, char *group);
@@ -22,5 +20,6 @@ char *convertGroupIdToName(int id);
 int convertGroupNameToId(char *name);
 
 void saveContactsToFile(char *filename, Contact *head);
+
 
 #endif
