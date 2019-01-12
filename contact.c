@@ -30,7 +30,7 @@ Contact* makeNode(char *name, char *phone, char *group) {
 
 Contact* addContact(Contact* head){
 	
-	Contact *newEntry;
+	Contact *newContact;
 	char name[80];
 	char phone[12];
 	char group[10];
@@ -43,9 +43,9 @@ Contact* addContact(Contact* head){
  	scanf("%s", group);
 
 	if(!isExist(head, name)){
-		newEntry = makeNode(name, phone, group);
-		newEntry->next = head;
-		head = newEntry;
+		newContact = makeNode(name, phone, group);
+		newContact->next = head;
+		head = newContact;
 	}
 	return head;
 } 
@@ -219,4 +219,51 @@ bool isExist(Contact *head, char *name){
      checkNode = checkNode->next;
 	}
 	return false;	
+}
+
+Contact* clearList(Contact* head){
+	Contact *nextContact;
+
+	while(head != NULL) {
+		nextContact = head->next;
+		free(head);
+		head = nextContact;
+	}
+	return head;
+}
+
+Contact* loadContactsFromFile(char *filename, Contact *head){
+
+	char name[80];
+	char phone[12];
+	int group;
+
+	Contact *temp;
+
+	head = clearList(head);
+
+	printf("Please enter the name and extension of file to load (e.g. contacts.txt): ");
+	scanf("%s", filename);
+
+	FILE *loadFile = fopen(filename, "r+");
+
+	while(!feof(loadFile)) {
+		fscanf(loadFile, "%s", name);
+		fscanf(loadFile, "%s", phone);
+		fscanf(loadFile, "%d", group);
+
+		temp = makeNode(name, phone, convertGroupIdToName(group));
+
+		if(head == NULL){
+			head = temp;
+		} else {
+			temp->next = head;
+		}
+
+		head = temp;
+	}
+
+	fclose(loadFile);
+	printf("File %s loaded.\n");
+	return head;
 }
