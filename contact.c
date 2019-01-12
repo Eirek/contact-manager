@@ -192,7 +192,8 @@ void saveContactsToFile(char *filename, Contact *head){
 	FILE *newFile = fopen(filename, "w");
 
 	while(head != NULL){
-		fprintf(newFile, "%s %s %d\n", head->name, head->phone, head->group);
+
+		fprintf(newFile, "%s %s %s\n", head->name, head->phone, convertGroupIdToName(head->group));
 		head = head->next;
 	}
 	fclose(newFile);
@@ -236,7 +237,7 @@ Contact* loadContactsFromFile(char *filename, Contact *head){
 
 	char name[80];
 	char phone[12];
-	int group;
+	char group[10];
 
 	Contact *temp;
 
@@ -247,12 +248,16 @@ Contact* loadContactsFromFile(char *filename, Contact *head){
 
 	FILE *loadFile = fopen(filename, "r+");
 
+	if(loadFile == NULL){
+		printf("Error: Cannot open the file\n");
+	} else{
+
 	while(!feof(loadFile)) {
 		fscanf(loadFile, "%s", name);
 		fscanf(loadFile, "%s", phone);
-		fscanf(loadFile, "%d", group);
+		fscanf(loadFile, "%s", group);
 
-		temp = makeNode(name, phone, convertGroupIdToName(group));
+		temp = makeNode(name, phone, group);
 
 		if(head == NULL){
 			head = temp;
@@ -266,4 +271,5 @@ Contact* loadContactsFromFile(char *filename, Contact *head){
 	fclose(loadFile);
 	printf("File %s loaded.\n");
 	return head;
+	}
 }
