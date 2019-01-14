@@ -10,6 +10,7 @@ int main(){
 	int choice =0;
 	char filename[100];
 	Contact* myContact;
+	Contact* newContact;
 	myContact = NULL;
 
 	while (choice != 7) {
@@ -17,6 +18,7 @@ int main(){
  		printf("1 - Add contact.\n");
  		printf("2 - Delete contact.\n");
 		printf("3 - Search for contact.\n");
+		printf("4 - Modify contact.\n");
 		printf("5 - Save contacts.\n");
 		printf("6 - Load contacts from file.\n");
  		printf("7 - Exit.\n");
@@ -27,16 +29,19 @@ int main(){
 			myContact = addContact(myContact);
 			break;
 		case 2:
-			deleteContact(myContact);
+			deleteContact(&myContact);
 			break;
 		case 3:
 			searchContact(myContact);
+			break;
+		case 4:
+			changeContact(myContact);
 			break;
 		case 5:
 			saveContactsToFile(filename, myContact);
 			break;
 		case 6:
-			loadContactsFromFile(filename, myContact);
+			myContact = loadContactsFromFile(filename, myContact);
 			break;
 		case 7:
 			printf("Shutting down.\n\n");

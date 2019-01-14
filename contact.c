@@ -7,18 +7,6 @@
 #include "config.h"
 #include "contact.h"
 
-Contact *ScanList(Contact *head, char *sName){
-	Contact *previous, *current;
-	previous = head;
-	current = head->next;
-
-	while ((current != NULL) && (strcmp(current->name, sName) != 0)) {
-		previous = current;
-		current = current->next;
-	}
-	return previous;
-}
-
 Contact* makeNode(char *name, char *phone, char *group) {
 	Contact *newNode = (Contact *) malloc(sizeof(Contact));
 	strcpy(newNode->name, name);
@@ -50,27 +38,35 @@ Contact* addContact(Contact* head){
 	return head;
 } 
 
+void deleteContact(Contact **head){
 
-void deleteContact(Contact *head) {
- 	char name[80];  
- 	Contact *delNode; 
- 	Contact *prevNode; 
+	char name[80];
 
  	printf("Enter the name of the contact you want to delete:\n");
- 	scanf("%s", &name);
+ 	scanf("%s", &name);	
 
- 	prevNode = ScanList(head, name);
- 	delNode = prevNode->next;
+	Contact *currentContact, *previousContact;
 
- 	if (delNode != NULL && strcmp(delNode->name, name) == 0) {
- 		head->next = delNode->next;
- 		printf("Contact with name %s deleted.\n\n", name);
- 		free(delNode);
- 	}
- 	else
- 		printf("The contact was not found.\n");
+  	previousContact = NULL;
+
+  	for (currentContact = *head;
+		currentContact != NULL;
+		previousContact = currentContact, currentContact = currentContact->next) {
+
+    	if (strcmp(currentContact->name, name) == 0) {  /* Found it. */
+      		if (previousContact == NULL) {
+        
+        		*head = currentContact->next;
+      		} else {
+        
+        		previousContact->next = currentContact->next;
+      		}
+            free(currentContact);
+      		return;
+    	}
+  	}
+
 }
-
 
 void searchContact(Contact *head){
 	system("clear");
@@ -270,6 +266,75 @@ Contact* loadContactsFromFile(char *filename, Contact *head){
 
 	fclose(loadFile);
 	printf("File %s loaded.\n");
-	return head;
+	
 	}
+	return head;
 }
+
+void changeContact(Contact* head) {
+
+	system("clear");
+	char searchName[80];
+	char newName[80];
+	char newPhone[12];
+	char newGroup[10];
+	int searchChoice = 0;
+	Contact *searchContact;
+
+	printf("Enter the name: ");
+			scanf("%s", searchName);
+			printf("\n");
+			if(head == NULL) {
+				printf("Contact list is Empty!\n");
+			}
+			while(head != NULL) {
+				if(strcmp(head->name, searchName) == 0){
+					printf("Found contact with name %s:\n", searchName);
+					searchContact = head;
+				} else {
+					printf("No contact with name %s found\n", searchName);
+				}
+				head = head->next;
+			}
+
+	while (searchChoice < 1){
+		printf("1. Change name\n");
+		printf("2. Change phone\n");
+		printf("3. Change group\n");
+		printf("What do you want to change to contact %s: ", searchContact);
+		scanf("%d", &searchChoice);
+
+		switch(searchChoice){
+
+			case 1:
+				printf("Enter new name fo contact: \n");
+				scanf("%s", newName);
+
+
+				if(!isExist(searchContact, newName)) {
+					strcpy(searchContact->name, newName);
+				}
+				    searchContact =	searchContact->next;  
+
+				break;
+
+			case 2:
+				printf("Enter new phone fo contact: \n");
+				scanf("%s", newPhone);
+
+				strcpy(searchContact->phone, newPhone);
+
+				break;
+
+			case 3:
+				printf("Enter new group fo contact: \n");
+				scanf("%s", newGroup);
+
+				searchContact->group = convertGroupNameToId(newGroup);
+
+				break;
+		}
+	}		
+
+}
+

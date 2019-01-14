@@ -3,9 +3,7 @@
 
 #include <stdbool.h>
 
-Contact *ScanList(Contact *head, char name[]);
-
-void deleteContact(Contact *head);
+void deleteContact(Contact **head);
 
 Contact* addContact(Contact* head);
 
@@ -25,5 +23,6 @@ void saveContactsToFile(char *filename, Contact *head);
 
 Contact* loadContactsFromFile(char *filename, Contact *head);
 
+void changeContact(Contact* head);
 
 #endif
