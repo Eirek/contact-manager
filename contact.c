@@ -53,7 +53,7 @@ void deleteContact(Contact **head){
 		currentContact != NULL;
 		previousContact = currentContact, currentContact = currentContact->next) {
 
-    	if (strcmp(currentContact->name, name) == 0) {  /* Found it. */
+    	if (strcmp(currentContact->name, name) == 0) {
       		if (previousContact == NULL) {
         
         		*head = currentContact->next;
