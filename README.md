@@ -1,6 +1,8 @@
 ### contact-manager
 
 ## TODO
-* Fix delete function <b>[-]</b>
-* Implement LoadFromFile function <b>[-]</b>
-* Add Change function <b>[-]</b>
+* Fix delete function <b>[+]</b>
+* Implement ChangeContact function <b>[+]</b>
+* Fix loadFromFile function <b>[-+]?</b> 
+
+* Cleanup some code <b>[-]</b>
