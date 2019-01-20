@@ -25,4 +25,6 @@ Contact* loadContactsFromFile(char *filename, Contact *head);
 
 void changeContact(Contact* head);
 
+void strUpper(char *str);
+
 #endif

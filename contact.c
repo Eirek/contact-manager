@@ -29,8 +29,10 @@ Contact* addContact(Contact* head){
  	scanf("%s", phone);
  	printf("Enter the group: \n");
  	scanf("%s", group);
+	strUpper(name);
 
 	if(!isExist(head, name)){
+
 		newContact = makeNode(name, phone, group);
 		newContact->next = head;
 		head = newContact;
@@ -43,7 +45,8 @@ void deleteContact(Contact **head){
 	char name[80];
 
  	printf("Enter the name of the contact you want to delete:\n");
- 	scanf("%s", &name);	
+ 	scanf("%s", &name);
+	strUpper(name);	
 
 	Contact *currentContact, *previousContact;
 
@@ -75,6 +78,10 @@ void searchContact(Contact *head){
 	char searchGroup[10];
 	int searchChoice = 0;
 
+	if(head == NULL) {
+		printf("Contact list is Empty!\n");
+	} else {
+
 	while (searchChoice < 1){
 		printf("1. Name\n");
 		printf("2. Phone\n");
@@ -85,61 +92,52 @@ void searchContact(Contact *head){
 
 		switch(searchChoice){
 			case 1:
+
 			printf("Enter the name: ");
 			scanf("%s", searchName);
+			strUpper(searchName);
 			printf("\n");
-			if(head == NULL) {
-				printf("Contact list is Empty!\n");
-			}
+
 			while(head != NULL) {
 				if(strcmp(head->name, searchName) == 0){
 					printf("Found contact with name %s:\n", searchName);
 					printf("%-20s %-12s %-10s\n", "NAME", "PHONE", "GROUP");
 					printf("%-20s %-12s %-10s\n", head->name, head->phone, convertGroupIdToName(head->group));
 
-				} else {
-					printf("No contact with name %s found\n", searchName);
-				}
+				} 
 				head = head->next;
 			}
 			break;
 
 			case 2:
+
 			printf("Enter the phone: ");
 			scanf("%s", searchPhone);
 			printf("\n");
-			if(head == NULL) {
-				printf("Contact list is Empty!\n");
-			}
+
 			while(head != NULL) {
 				if(strcmp(head->phone, searchPhone) == 0){
 					printf("Found contact with phone %s:\n", searchPhone);
 					printf("%-20s %-12s %-10s\n", "NAME", "PHONE", "GROUP");
 					printf("%-20s %-12s %-10s\n", head->name, head->phone, convertGroupIdToName(head->group));
 
-				} else {
-					printf("No contact with phone %s found\n", searchPhone);
-				}
+				} 
 				head = head->next;
 			}
 			break;
 
 			case 3:
-			if(head == NULL) {
-				printf("Contact list is Empty!\n");
-				
-			}
+
 			printf("Enter the group: ");
 			scanf("%s", searchGroup);
+			strUpper(searchGroup);
+			
 			printf("\n");
 			printf("Contacts in group %s:\n", searchGroup);
 			printf("%-20s %-12s %-10s\n", "NAME", "PHONE", "GROUP");
 			while(head != NULL) {				
 				if(strcmp(convertGroupIdToName(head->group), searchGroup) == 0){					
 					printf("%-20s %-12s %-10s\n", head->name, head->phone, convertGroupIdToName(head->group));
-				} else {
-					printf("No contacts in group %s\n", searchGroup);
-					break;
 				}
 				head = head->next;
 				}
@@ -147,10 +145,7 @@ void searchContact(Contact *head){
 			break;
 
 			case 4:
-				if(head == NULL) {
-					printf("Contact list is Empty!\n");
-					break;
-				}
+
 			printf("\n");
 			printf("Displaying all contacts:\n");
 			printf("%-20s %-12s %-10s\n", "NAME", "PHONE", "GROUP");
@@ -164,6 +159,7 @@ void searchContact(Contact *head){
 				printf("Invalid option.\n");
 				break;
 
+			}
 		}
 	}
 }
@@ -171,13 +167,13 @@ void searchContact(Contact *head){
 char *convertGroupIdToName(int id){
 	switch(id){
 		case 1:
-			return "family";
+			return "FAMILY";
 		case 2:
-			return "friends";
+			return "FRIENDS";
 		case 3:
-			return "colleagues";
+			return "COLLEAGUES";
 		default:
-			return "nogroup";
+			return "NOGROUP";
 	}
 }
 
@@ -195,12 +191,13 @@ void saveContactsToFile(char *filename, Contact *head){
 	fclose(newFile);
 }
 
-int convertGroupNameToId(char *name) {
-		if (strcmp(name, "family") == 0)
+int convertGroupNameToId(char *group) {
+
+		if (strcmp(group, "family") == 0)
 		return FAMILY;
-		else if (strcmp(name, "friends") == 0)
+		else if (strcmp(group, "friends") == 0)
 		return FRIENDS;
-		else if (strcmp(name, "colleagues") == 0)
+		else if (strcmp(group, "colleagues") == 0)
 		return COLLEAGUES;
 		else
 		return NO_GROUP;
@@ -281,13 +278,17 @@ void changeContact(Contact* head) {
 	int searchChoice = 0;
 	Contact *searchContact;
 
-	printf("Enter the name: ");
-			scanf("%s", searchName);
-			printf("\n");
-			if(head == NULL) {
-				printf("Contact list is Empty!\n");
-			}
+
+	if(head == NULL) {
+		printf("Contact list is Empty!\n");		
+		} else {
 			while(head != NULL) {
+
+				printf("Enter the name: ");
+				scanf("%s", searchName);
+				strUpper(searchName);
+				printf("\n");
+
 				if(strcmp(head->name, searchName) == 0){
 					printf("Found contact with name %s:\n", searchName);
 					searchContact = head;
@@ -297,44 +298,58 @@ void changeContact(Contact* head) {
 				head = head->next;
 			}
 
-	while (searchChoice < 1){
-		printf("1. Change name\n");
-		printf("2. Change phone\n");
-		printf("3. Change group\n");
-		printf("What do you want to change to contact %s: ", searchContact);
-		scanf("%d", &searchChoice);
+		while (searchChoice < 1){
+			printf("1. Change name\n");
+			printf("2. Change phone\n");
+			printf("3. Change group\n");
+			printf("What do you want to change to contact %s: ", searchContact);
+			scanf("%d", &searchChoice);
 
-		switch(searchChoice){
+			switch(searchChoice){
 
-			case 1:
-				printf("Enter new name fo contact: \n");
-				scanf("%s", newName);
+				case 1:
+					printf("Enter new name fo contact: \n");
+					scanf("%s", newName);
+					strUpper(newName);
 
 
-				if(!isExist(searchContact, newName)) {
-					strcpy(searchContact->name, newName);
-				}
-				    searchContact =	searchContact->next;  
+					if(!isExist(searchContact, newName)) {
+						strcpy(searchContact->name, newName);
+					}
+						searchContact =	searchContact->next;  
 
-				break;
+					break;
 
-			case 2:
-				printf("Enter new phone fo contact: \n");
-				scanf("%s", newPhone);
+				case 2:
+					printf("Enter new phone fo contact: \n");
+					scanf("%s", newPhone);
 
-				strcpy(searchContact->phone, newPhone);
+					strcpy(searchContact->phone, newPhone);
 
-				break;
+					break;
 
-			case 3:
-				printf("Enter new group fo contact: \n");
-				scanf("%s", newGroup);
+				case 3:
+					printf("Enter new group fo contact: \n");
+					scanf("%s", newGroup);
+					strUpper(newGroup);
 
-				searchContact->group = convertGroupNameToId(newGroup);
+					searchContact->group = convertGroupNameToId(newGroup);
 
-				break;
-		}
-	}		
+					break;
+			}
+		}		
+	}
+}
 
+void strUpper(char *str)
+{
+	unsigned char *c = (unsigned char *)str;
+
+	while (*c) {
+		*c = toupper((unsigned char)*c);
+		c++;
+	}
+
+	return;
 }
 
